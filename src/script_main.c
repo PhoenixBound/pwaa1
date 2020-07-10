@@ -6,7 +6,7 @@
 
 static void AdvanceScriptContext(struct ScriptContext *scriptCtx);
 extern void DrawTextAndMapMarkers(struct ScriptContext *scriptCtx);
-static void PutCharInTextbox(u32, u32, u32);
+void PutCharInTextbox(u32, u32, u32);
 extern bool32 (*gScriptCmdFuncs[0x5F])(struct ScriptContext *);
 
 void LoadCurrentScriptIntoRam(void)
@@ -125,13 +125,13 @@ void AdvanceScriptContext(struct ScriptContext * scriptCxt)
         scriptCxt->currentToken -= 0x80;
         if (scriptCxt->unk0 & 4)
         {
-            PutCharInTextbox(scriptCxt->currentToken, scriptCxt->fullscreenTextY, scriptCxt->fullscreenCharCount);
+            PutVwfCharInTextbox(scriptCxt->currentToken, scriptCxt->fullscreenTextY, scriptCxt->fullscreenCharCount);
             scriptCxt->fullscreenCharCount++;
             scriptCxt->fullscreenTextX++;
         }
         else
         {
-            PutCharInTextbox(scriptCxt->currentToken, scriptCxt->textY, scriptCxt->textX);
+            PutVwfCharInTextbox(scriptCxt->currentToken, scriptCxt->textY, scriptCxt->textX);
             scriptCxt->textX++;
         }
 

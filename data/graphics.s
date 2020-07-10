@@ -1656,3 +1656,11 @@ gUnknown_087493D4:
 	.global gUnknown_08749404
 gUnknown_08749404:
     .incbin "baserom.gba", 0x00749404, 0x24
+
+	.global gArialGlyphs
+gArialGlyphs:
+	.incbin "data/arialglyphs.bin"
+	
+	.global gArialGlyphWidths
+gArialGlyphWidths:
+	.incbin "data/arialmetrics.bin"
