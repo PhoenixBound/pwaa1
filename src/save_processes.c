@@ -422,7 +422,7 @@ void SaveGameExitSaveScreenSubProcess(struct Main *main)
     sub_80020B0(main->currentBG);
     DmaCopy16(3, gSaveDataBuffer.bg2Map, gBG2MapBuffer, sizeof(gBG2MapBuffer));
     DmaCopy16(3, gSaveDataBuffer.textBoxCharacters, gTextBoxCharacters, sizeof(gTextBoxCharacters));
-    RedrawTextboxCharacters();
+    RedrawVWFCharacters();
     DmaCopy16(3, &gSaveDataBuffer.scriptCtx, &gScriptContext, sizeof(gScriptContext));
     DmaCopy16(3, &gSaveDataBuffer.ioRegs, &gLCDIORegisters, sizeof(gLCDIORegisters));
     DmaCopy16(3, gSaveDataBuffer.mapMarker, gMapMarker, sizeof(gMapMarker));
