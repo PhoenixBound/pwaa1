@@ -276,8 +276,82 @@ bool32 Command51(struct ScriptContext *scriptCtx)
     return 0;
 }
 
+typedef u8 Glyph[256]; 
+
+struct FontRenderData {
+	struct NewTextBoxCharacter *saveCharCounter;
+	
+    Glyph const *arialGlyphsAddr;
+
+	u16 characterCode;
+	u16 xCol;
+	u16 yRow;
+	
+	s16 xOffset;	
+	u32 x;
+	u32 y;
+	u32 tileNum;
+	u32 tileXOfs; // Pixel offset into the current tile (0 thru 7)
+	u32 tileYOfs;
+
+	u32 oamBaseTile;
+	u32 oamNum;
+
+	u32 permanentXPos;
+
+	u32 fsBaseTile;
+	u32 fsBaseOamNum;
+	u32 fsCurLine;
+
+	bool8 oamNecessary;
+	bool8 saveCharUse;
+	bool8 fsUsed;
+	
+	u8 soundCueCounter;
+	// ScriptContext *gameRamBase3; -- this is a pointer to gScriptContext
+};
+
+#define VWF_RENDERER ((struct FontRenderData *)(EWRAM_START+0x5000))
+#define DivRoundNearest(divisor, dividend) (((divisor) + ((dividend)/2)) / (dividend))
+extern u32 const gArialGlyphWidths[0xE0];
+
 bool32 Command52(struct ScriptContext *scriptCtx)
 {
+    u32 preProcCharCode = 0;
+    u32 charCode;
+    bool32 isCenterEnd;
+    u16 * oldScriptPtr; 
+    u32 stringWidth = 0;
+
+    VWF_RENDERER->xOffset = 0;
+    
+    scriptCtx->scriptPtr++;
+    isCenterEnd = *scriptCtx->scriptPtr++;
+    if(isCenterEnd)
+        return 0;
+
+    oldScriptPtr = scriptCtx->scriptPtr;
+    while(1)
+    {
+        if(*scriptCtx->scriptPtr >= 0x80)
+        {
+            charCode = *scriptCtx->scriptPtr - 0x80;
+            if(charCode > 0x600)
+            {
+                preProcCharCode = charCode - 0x6A0;
+                stringWidth += gArialGlyphWidths[preProcCharCode];
+            }
+        }
+        else if(*scriptCtx->scriptPtr == 1 || *scriptCtx->scriptPtr == 2)
+        {
+            *((u32 *)0x03007000) = stringWidth;
+            VWF_RENDERER->xOffset = (DISPLAY_WIDTH/2) - DivRoundNearest(stringWidth, 2) - scriptCtx->textXOffset;
+            scriptCtx->scriptPtr = oldScriptPtr;
+            return 0;
+        }
+
+        scriptCtx->scriptPtr++;
+    }
     return 0;
 }
 
