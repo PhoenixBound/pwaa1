@@ -173,7 +173,6 @@ bool32 Command03(struct ScriptContext * scriptCtx)
 
 bool32 Command04(struct ScriptContext * scriptCtx)
 {
-
     if(gJoypad.pressedKeysRaw & scriptCtx->scriptPtr[1]) 
         scriptCtx->scriptPtr+=2;
     return 1;

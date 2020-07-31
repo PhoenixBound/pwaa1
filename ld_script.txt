@@ -51,6 +51,7 @@ SECTIONS {
     .rodata :
     ALIGN(4)
     {
+        src/vwf.o(.rodata);
         src/main.o(.rodata);
         src/bg3_control.o(.rodata);
         data/data.o(.rodata);
