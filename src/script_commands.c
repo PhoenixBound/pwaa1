@@ -876,7 +876,7 @@ bool32 Command25(struct ScriptContext * scriptCtx)
 bool32 Command26(struct ScriptContext * scriptCtx)
 {
     scriptCtx->scriptPtr++;
-    if(*scriptCtx->scriptPtr != 0)
+    if(*scriptCtx->scriptPtr)
         gMain.gameStateFlags |= 0x10;
     else
         gMain.gameStateFlags &= ~0x10;
