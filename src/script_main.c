@@ -68,8 +68,8 @@ void InitScriptSection(struct ScriptContext *scriptCtx)
     scriptCtx->textSpeed = 3;
     scriptCtx->unk26 = 3;
     scriptCtx->textDelayTimer = 0;
-    scriptCtx->unk28 = 0x18;
-    scriptCtx->unk2A = 0x56;
+    scriptCtx->unk28 = 24;
+    scriptCtx->unk2A = 86;
     {
         void *r1;
         u32 *r0;
