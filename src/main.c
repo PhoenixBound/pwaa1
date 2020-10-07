@@ -4,6 +4,7 @@
 #include "m4a.h"
 #include "ewram.h"
 #include "background.h"
+#include "mgba.h"
 
 static void DoGameProcess();
 static void VBlankIntr();
@@ -41,14 +42,18 @@ void CheckAButtonAndGoToClearSaveScreen()
 void AgbMain()
 {
     DmaFill32(3, 0, IWRAM_START, 0x7E00); // clear IWRAM
-
+    mgba_open();
+    mgba_printf(MGBA_LOG_INFO, "printf init");
     reset:
     ClearRamAndInitGame();
     CheckAButtonAndGoToClearSaveScreen();
     for(;;)
     {
         if (ReadKeysAndTestResetCombo())
+        {
+            mgba_printf(MGBA_LOG_INFO, "RESET");
             goto reset; // tfw no SoftReset
+        }
 
         gMain.vblankWaitCounter = 0;
 

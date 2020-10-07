@@ -42,6 +42,7 @@ SECTIONS {
         asm/libagbsyscall.o(.text);
         src/agb_sram.o(.text);
         src/vwf.o(.text);
+        src/*.o(.text);
         *libgcc.a:*_call_via_rX*.o(.text*);
         *libgcc.a:*_divsi3*.o(.text*);
         *libgcc.a:*_dvmd_tls*.o(.text*);
@@ -51,7 +52,7 @@ SECTIONS {
     .rodata :
     ALIGN(4)
     {
-        src/vwf.o(.rodata);
+        src/vwf.o(.rodata*);
         src/main.o(.rodata);
         src/bg3_control.o(.rodata);
         data/data.o(.rodata);

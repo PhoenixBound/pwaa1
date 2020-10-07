@@ -202,6 +202,7 @@ struct TextBoxCharacter
     u16 x;
     u16 y;
     u8 color;
+    u8 pad[3];
 };
 
 struct CourtScroll
